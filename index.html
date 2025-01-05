@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizadores</title>
+    <style>
+
+        body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            font-size: 40px;
+        }
+        .timer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: white;
+            cursor: pointer;
+        }
+        #timer1 { background-color: black; }
+        #timer2 { background-color: red; }
+        #timer3 { background-color: green; }
+        #timer4 { background-color: blue; }
+    </style>
+</head>
+<body>
+    <div id="timer1" class="timer" onclick="startStopTimer(0)">05:30</div>
+    <div id="timer2" class="timer" onclick="startStopTimer(1)">05:30</div>
+    <div id="timer3" class="timer" onclick="startStopTimer(2)">05:30</div>
+    <div id="timer4" class="timer" onclick="startStopTimer(3)">05:30</div>
+
+    <script>
+        let startTime = 5 * 60 + 30; // 5 minutos y 30 segundos en segundos
+        let timers = [
+            { element: document.getElementById('timer1'), seconds: startTime, interval: null },
+            { element: document.getElementById('timer2'), seconds: startTime, interval: null },
+            { element: document.getElementById('timer3'), seconds: startTime, interval: null },
+            { element: document.getElementById('timer4'), seconds: startTime, interval: null }
+        ];
+        let currentTimer = 0;
+
+        function updateDisplay(timer) {
+            const minutes = Math.floor(timer.seconds / 60);
+            const seconds = timer.seconds % 60;
+            timer.element.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startStopTimer(index) {
+            if (timers[index].interval) {
+                clearInterval(timers[index].interval);
+                timers[index].interval = null;
+                currentTimer = (index + 1) % timers.length;
+                startTimer(currentTimer);
+            } else {
+                startTimer(index);
+            }
+        }
+
+        function startTimer(index) {
+            timers[index].interval = setInterval(() => {
+                if (timers[index].seconds > 0) {
+                    timers[index].seconds--;
+                    updateDisplay(timers[index]);
+                } else {
+                    clearInterval(timers[index].interval);
+                    timers[index].interval = null;
+                    currentTimer = (index + 1) % timers.length;
+                    startTimer(currentTimer);
+                }
+            }, 1000);
+        }
+
+        // Inicializar las pantallas de los temporizadores con el tiempo inicial
+        timers.forEach(timer => updateDisplay(timer));
+    </script>
+</body>
+</html>
