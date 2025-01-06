@@ -1,0 +1,40 @@
+:root {
+  --header-height: 50px;
+}
+body {
+  margin: 0;
+}
+.timers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: calc(100vh - var(--header-height));
+  font-family: Arial, sans-serif;
+  font-size: 25px;
+}
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  color: white;
+  cursor: pointer;
+}
+#timer1 { background-color: black; }
+#timer2 { background-color: red; }
+#timer3 { background-color: green; }
+#timer4 { background-color: blue; }
+.time-input {
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+}
+.time-input select {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
